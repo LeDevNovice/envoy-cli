@@ -1,6 +1,7 @@
 import { Command } from 'commander';
 
 import { Logger } from '@utils/logger';
+import { ConfigLoader } from '@utils/config';
 import { Analyzer } from '@core/analyzer';
 import { Syncer } from '@core/syncer';
 
@@ -15,7 +16,9 @@ export function createSyncCommand(): Command {
         .action(async options => {
             Logger.header('Starting synchronization process...\n');
 
-            const result = await Analyzer.analyze();
+            const config = ConfigLoader.load();
+
+            const result = await Analyzer.analyze({ exclude: config.exclude });
 
             if (result.missing.length === 0 && result.unused.length === 0) {
                 Logger.success('No discrepancies found. .env.example is up to date.');

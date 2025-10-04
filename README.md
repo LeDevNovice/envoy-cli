@@ -15,6 +15,7 @@
 - [Why envoy-cli ?](#-why-envoy-cli)
 - [Features](#-features)
 - [Installation](#-installation)
+- [Windows Users](#-windows-users)
 - [Quick Start](#-quick-start)
 - [Commands](#-commands)
   - [init](#init---initialize-configuration)
@@ -86,6 +87,58 @@ Or with yarn :
 ```bash
 yarn add -D envoy-cli
 ```
+
+---
+
+## Windows Users
+
+### Git Bash Compatibility
+
+If you're using **Git Bash on Windows** and encounter issues running `envoy-cli`, this is due to a known compatibility issue between Git Bash (MinTTY) and Node.js CLI applications.
+
+#### Quick Fix for Git Bash
+
+Add this alias to your `.bashrc`:
+
+```bash
+# Open your .bashrc
+nano ~/.bashrc
+
+# Add this line at the end
+alias envoy-cli='winpty envoy-cli.cmd'
+
+# Save and reload
+source ~/.bashrc
+```
+
+Now `envoy-cli` will work correctly in Git Bash! 
+
+#### Alternative: Use Native Windows Terminals
+
+If you prefer not to use the alias, envoy-cli works perfectly in:
+- ✅ **PowerShell** (Recommended)
+- ✅ **Windows Terminal**
+- ✅ **Command Prompt (CMD)**
+- ✅ **WSL (Windows Subsystem for Linux)**
+
+```powershell
+# PowerShell - No configuration needed
+envoy-cli --version
+```
+
+#### Why Does This Happen?
+
+Git Bash uses MinTTY, which doesn't natively handle Windows console applications. The `winpty` wrapper bridges this gap by properly routing stdin/stdout/stderr between MinTTY and Node.js.
+
+### Known Terminal Limitations
+
+**Git Bash Display Issues :**
+- Variable names with underscores may display as asterisks (`_VAR` shows as `*VAR`)
+- Exit codes may differ from other terminals
+- **Solution :** Use PowerShell, CMD, or Windows Terminal for accurate display
+
+These are Git Bash (MinTTY) rendering quirks, not bugs in envoy-cli. 
+All functionality works correctly across all terminals.
 
 ---
 
@@ -615,9 +668,18 @@ npm run test:watch
 
 ---
 
+## FAQ
+
+### Why doesn't envoy-cli work in Git Bash on Windows?
+
+Git Bash uses MinTTY which has compatibility issues with Node.js CLI apps. 
+See [Windows Users](#-windows-users) section for the solution.
+
+---
+
 ## Contributing
 
-Contributions are welcome! Here's how you can help:
+Contributions are welcome ! Here's how you can help :
 
 ### Reporting Bugs
 
@@ -626,7 +688,7 @@ Contributions are welcome! Here's how you can help:
    - Clear title and description
    - Steps to reproduce
    - Expected vs actual behavior
-   - Your environment (OS, Node version, etc.)
+   - Your environment (OS, Node version, etc...)
 
 ### Suggesting Features
 

@@ -1,9 +1,13 @@
-import { EnvVariable, AnalysisResult } from '../types';
+import { EnvVariable, AnalysisResult, ScanOptions } from '../types';
 import { Scanner } from './scanner';
 
 export class Analyzer {
-    static async analyze(): Promise<AnalysisResult> {
-        const codeVars = await Scanner.scanProject();
+    /**
+     * Analyze the project to find missing, unused, and synced environment variables
+     * @param options - Scan options including exclude patterns
+     */
+    static async analyze(options?: ScanOptions): Promise<AnalysisResult> {
+        const codeVars = await Scanner.scanProject(options);
 
         const exampleVars = Scanner.getEnvExampleVars();
 

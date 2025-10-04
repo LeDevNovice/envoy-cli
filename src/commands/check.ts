@@ -2,6 +2,7 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 
 import { Logger } from '@utils/logger';
+import { ConfigLoader } from '@utils/config';
 import { Analyzer } from '@core/analyzer';
 
 export function createCheckCommand(): Command {
@@ -11,7 +12,9 @@ export function createCheckCommand(): Command {
         .action(async options => {
             Logger.header('Envoy - Check Environment Variables\n');
 
-            const result = await Analyzer.analyze();
+            const config = ConfigLoader.load();
+
+            const result = await Analyzer.analyze({ exclude: config.exclude });
 
             console.log(chalk.bold(`\nFound ${result.total} environment variables in code\n`));
 
@@ -19,7 +22,8 @@ export function createCheckCommand(): Command {
                 Logger.error(`MISSING in .env.example (${result.missing.length}):`);
 
                 for (const varInfo of result.missing) {
-                    console.log(chalk.red(`  ✗ ${varInfo.name}`));
+                    const displayName = varInfo.name;
+                    console.log(chalk.red(`  ✗ ${displayName}`));
                     const firstLocation = varInfo.locations[0];
                     Logger.dim(`    → First used in ${firstLocation.file}:${firstLocation.line}`);
 
