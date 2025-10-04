@@ -8,7 +8,7 @@ export function createCheckCommand(): Command {
     return new Command('check')
         .description('Check for missing or unused environment variables')
         .option('--ci', 'Exit with code 1 if issues are found (for CI/CD pipelines)')
-        .action(async (options) => {
+        .action(async options => {
             Logger.header('Envoy - Check Environment Variables\n');
 
             const result = await Analyzer.analyze();
@@ -24,7 +24,9 @@ export function createCheckCommand(): Command {
                     Logger.dim(`    → First used in ${firstLocation.file}:${firstLocation.line}`);
 
                     if (varInfo.locations.length > 1) {
-                        Logger.dim(`    → Also used in ${varInfo.locations.length - 1} other locations`);
+                        Logger.dim(
+                            `    → Also used in ${varInfo.locations.length - 1} other locations`
+                        );
                     }
                 }
                 console.log();
@@ -53,7 +55,7 @@ export function createCheckCommand(): Command {
             }
 
             if (result.missing.length > 0 || result.unused.length > 0) {
-                Logger.info('💡 Run "envguard sync --auto" to fix automatically\n');
+                Logger.info('💡 Run "envoy-cli sync --auto" to fix automatically\n');
 
                 if (options.ci) {
                     process.exit(1);

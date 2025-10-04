@@ -3,11 +3,11 @@ import { EnvVariable, VariableLocation, ScanOptions } from '../types';
 
 export class Scanner {
     private static readonly PATTERN_SOURCES = [
-        /process\.env\.([A-Z_][A-Z0-9_]*)/gi,                    // process.env.VAR
-        /process\.env\[['"]([A-Z_][A-Z0-9_]*)['"]]/gi,          // process.env['VAR']
-        /import\.meta\.env\.([A-Z_][A-Z0-9_]*)/gi,              // import.meta.env.VAR (Vite)
-        /Deno\.env\.get\(['"]([A-Z_][A-Z0-9_]*)['"]]/gi,        // Deno.env.get('VAR')
-        /\$env:([A-Z_][A-Z0-9_]*)/gi,                           // $env:VAR (PowerShell)
+        /process\.env\.([A-Z_][A-Z0-9_]*)/gi, // process.env.VAR
+        /process\.env\[['"]([A-Z_][A-Z0-9_]*)['"]]/gi, // process.env['VAR']
+        /import\.meta\.env\.([A-Z_][A-Z0-9_]*)/gi, // import.meta.env.VAR (Vite)
+        /Deno\.env\.get\(['"]([A-Z_][A-Z0-9_]*)['"]]/gi, // Deno.env.get('VAR')
+        /\$env:([A-Z_][A-Z0-9_]*)/gi, // $env:VAR (PowerShell)
     ] as const;
 
     static async scanProject(options: ScanOptions = {}): Promise<Map<string, EnvVariable>> {
@@ -21,8 +21,8 @@ export class Scanner {
                 'build/**',
                 '.git/**',
                 'coverage/**',
-                ...(options.exclude || [])
-            ]
+                ...(options.exclude || []),
+            ],
         });
 
         for (const file of files) {
@@ -42,7 +42,7 @@ export class Scanner {
                         file: file.replace(projectRoot + '/', ''),
                         line: lineNumber,
                         column: match.index - content.lastIndexOf('\n', match.index),
-                        code: line.trim()
+                        code: line.trim(),
                     };
 
                     if (envVars.has(varName)) {
@@ -52,7 +52,7 @@ export class Scanner {
                             name: varName,
                             locations: [location],
                             inExample: false,
-                            inEnv: false
+                            inEnv: false,
                         });
                     }
                 }

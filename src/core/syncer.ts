@@ -1,6 +1,6 @@
-import { FileUtils } from "@utils/file-utils";
-import { Logger } from "@utils/logger";
-import { EnvVariable, SyncOptions } from "../types";
+import { FileUtils } from '@utils/file-utils';
+import { Logger } from '@utils/logger';
+import { EnvVariable, SyncOptions } from '../types';
 
 export class Syncer {
     static createExample(): void {

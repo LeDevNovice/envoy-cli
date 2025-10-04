@@ -1,4 +1,4 @@
-import chalk from 'chalk'
+import chalk from 'chalk';
 
 export class Logger {
     static dim(message: string): void {
@@ -18,7 +18,7 @@ export class Logger {
     }
 
     static list(items: string[], prefix: string = '  •'): void {
-        items.forEach(item => console.log(`${prefix} ${item}`))
+        items.forEach(item => console.log(`${prefix} ${item}`));
     }
 
     static success(message: string): void {
