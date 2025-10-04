@@ -20,4 +20,8 @@ export class Logger {
     static success(message: string): void {
         console.log(chalk.blue('[✓]', message));
     }
+
+    static warning(message: string): void {
+        console.log(chalk.yellow('[!]'), message);
+    }
 }

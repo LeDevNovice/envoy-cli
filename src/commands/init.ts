@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import { Logger } from "../utils/logger";
 import { FileUtils } from "../utils/file-utils";
+import { Syncer } from "../core/syncer";
 
 const config = {
     exclude: ['dist/**', 'build/**', 'coverage/**'],
@@ -15,6 +16,10 @@ export function createInitCommand(): Command {
             if (!FileUtils.exists('package.json')) {
                 Logger.error('No package.json found in the current directory. Please run this command in the root of your project.');
                 process.exit(1);
+            }
+
+            if (!FileUtils.exists('.env.example')) {
+                Syncer.createExample();
             }
 
             if (!FileUtils.exists('.envoyrc.json')) {
