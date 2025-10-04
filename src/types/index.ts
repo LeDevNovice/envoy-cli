@@ -24,3 +24,9 @@ export interface ScanOptions {
     exclude?: string[];
     includeNodeModules?: boolean;
 }
+
+export interface SyncOptions {
+    auto?: boolean;
+    remove?: boolean;
+    addComments?: boolean;
+}
