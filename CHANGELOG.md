@@ -1,0 +1,20 @@
+# Changelog
+_All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning._
+
+## Unreleased
+## 0.0.1 - 2025-10-04
+### Added
+### Core Features
+
+- Implemented core command-line interface using Commander.js
+  - init command: Initialize envoy-cli configuration in any Node.js project
+    - Validates presence of package.json before initialization
+    - Creates .env.example file if it doesn't exist
+    - Creates .envoyrc.json configuration file with default exclude patterns
+    - Provides helpful next steps after initialization
+    - Prevents overwriting existing configuration files
+  - Utilities
+    - FileUtils: File system operations
+    - Logger: Colored console output
+  - Core Modules
+    - Syncer: Environment variable synchronization
