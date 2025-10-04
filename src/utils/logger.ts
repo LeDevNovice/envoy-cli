@@ -6,15 +6,15 @@ export class Logger {
     }
 
     static error(message: string): void {
-        console.log(chalk.blue('[✗]', message));
+        console.log(chalk.red('[✗]', message));
     }
 
     static header(message: string): void {
-        console.log(chalk.bold.cyan('[✗]', `\n${message}\n`));
+        console.log(chalk.bold.cyan(`\n${message}\n`));
     }
 
     static info(message: string): void {
-        console.log(chalk.blue('[i]', message));
+        console.log(chalk.blueBright('[i]', message));
     }
 
     static list(items: string[], prefix: string = '  •'): void {
@@ -22,7 +22,7 @@ export class Logger {
     }
 
     static success(message: string): void {
-        console.log(chalk.blue('[✓]', message));
+        console.log(chalk.green('[✓]', message));
     }
 
     static warning(message: string): void {
