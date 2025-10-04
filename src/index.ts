@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { createInitCommand } from './commands/init';
+
+import { createInitCommand } from '@commands/init';
+import { createCheckCommand } from '@commands/check';
 
 const program = new Command();
 
@@ -11,5 +13,6 @@ program
     .version('0.0.1');
 
 program.addCommand(createInitCommand());
+program.addCommand(createCheckCommand());
 
 program.parse();

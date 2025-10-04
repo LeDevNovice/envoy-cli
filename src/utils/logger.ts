@@ -1,6 +1,10 @@
 import chalk from 'chalk'
 
 export class Logger {
+    static dim(message: string): void {
+        console.log(chalk.dim(message));
+    }
+
     static error(message: string): void {
         console.log(chalk.blue('[✗]', message));
     }

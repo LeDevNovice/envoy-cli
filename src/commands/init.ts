@@ -1,7 +1,8 @@
 import { Command } from "commander";
-import { Logger } from "../utils/logger";
-import { FileUtils } from "../utils/file-utils";
-import { Syncer } from "../core/syncer";
+
+import { Logger } from "@utils/logger";
+import { FileUtils } from "@utils/file-utils";
+import { Syncer } from "@core/syncer";
 
 const config = {
     exclude: ['dist/**', 'build/**', 'coverage/**'],

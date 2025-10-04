@@ -1,5 +1,5 @@
-import { FileUtils } from "../utils/file-utils";
-import { Logger } from "../utils/logger";
+import { FileUtils } from "@utils/file-utils";
+import { Logger } from "@utils/logger";
 
 export class Syncer {
     static createExample(): void {
