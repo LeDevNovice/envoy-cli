@@ -7,14 +7,20 @@ export default defineConfig({
         environment: 'node',
         coverage: {
             provider: 'v8',
-            reporter: ['text', 'json', 'html'],
+            reporter: ['text', 'json', 'html', 'lcov'],
             exclude: [
                 'node_modules/',
                 'dist/',
                 '__tests__/',
                 '*.config.ts',
                 'src/index.ts'
-            ]
+            ],
+            thresholds: {
+                lines: 80,
+                functions: 80,
+                branches: 75,
+                statements: 80
+            }
         },
         include: ['__tests__/**/*.test.ts'],
         mockReset: true,
@@ -23,7 +29,10 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, './src')
+            '@': path.resolve(__dirname, './src'),
+            '@core': path.resolve(__dirname, './src/core'),
+            '@commands': path.resolve(__dirname, './src/commands'),
+            '@utils': path.resolve(__dirname, './src/utils'),
         }
     }
 });
