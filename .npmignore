@@ -1,0 +1,42 @@
+# Source files
+src/
+__tests__/
+
+# Configuration files
+tsconfig.json
+vitest.config.ts
+.prettierrc
+.prettierignore
+.oxlintrc.json
+
+# Build artifacts
+coverage/
+*.tsbuildinfo
+
+# Development files
+*.test.ts
+*.spec.ts
+
+# Package managers
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+.pnpm/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log
+.env
+.env.local
+.envoyrc.json.example
