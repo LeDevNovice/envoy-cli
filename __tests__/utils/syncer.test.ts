@@ -34,10 +34,7 @@ describe('Syncer', () => {
 # Add your environment variables here
 `;
 
-            expect(FileUtils.write).toHaveBeenCalledWith(
-                '.env.example',
-                expectedContent
-            );
+            expect(FileUtils.write).toHaveBeenCalledWith('.env.example', expectedContent);
         });
 
         it('should log warning and not create file when .env.example already exists', () => {

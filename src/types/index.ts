@@ -13,9 +13,9 @@ export interface VariableLocation {
 }
 
 export interface AnalysisResult {
-    missing: EnvVariable[];      // In codebase but not in .env.example
-    unused: string[];            // In .env.example but not in codebase
-    synced: EnvVariable[];       // Correctly synced variables
+    missing: EnvVariable[]; // In codebase but not in .env.example
+    unused: string[]; // In .env.example but not in codebase
+    synced: EnvVariable[]; // Correctly synced variables
     total: number;
 }
 

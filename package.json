@@ -1,41 +1,47 @@
 {
-  "name": "envoy-cli",
-  "version": "0.0.3",
-  "description": "The envoy between your code and environment variable config - Never miss an environment variable again",
-  "main": "dist/index.js",
-  "bin": {
-    "envoy-cli": "./dist/index.js"
-  },
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "start": "node dist/index.js",
-    "prepublishOnly": "npm run build",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
-  },
-  "keywords": [
-    "env",
-    "environment",
-    "dotenv",
-    "cli",
-    "devtools"
-  ],
-  "author": "LeDevNovice",
-  "license": "MIT",
-  "engines": {
-    "node": ">=16.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "^24.6.2",
-    "@vitest/coverage-v8": "^3.2.4",
-    "typescript": "^5.9.3",
-    "vitest": "^3.2.4"
-  },
-  "dependencies": {
-    "chalk": "^5.6.2",
-    "commander": "^14.0.1",
-    "glob": "^11.0.3"
-  }
+    "name": "envoy-cli",
+    "version": "0.0.3",
+    "description": "The envoy between your code and environment variable config - Never miss an environment variable again",
+    "main": "dist/index.js",
+    "bin": {
+        "envoy-cli": "./dist/index.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "start": "node dist/index.js",
+        "prepublishOnly": "npm run build",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage",
+        "lint": "oxlint src --deny-warnings",
+        "lint:fix": "oxlint src --fix",
+        "format": "prettier --write \"src/**/*.ts\" \"__tests__/**/*.ts\"",
+        "format:check": "prettier --check \"src/**/*.ts\" \"__tests__/**/*.ts\""
+    },
+    "keywords": [
+        "env",
+        "environment",
+        "dotenv",
+        "cli",
+        "devtools"
+    ],
+    "author": "LeDevNovice",
+    "license": "MIT",
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^24.6.2",
+        "@vitest/coverage-v8": "^3.2.4",
+        "oxlint": "^1.19.0",
+        "prettier": "^3.6.2",
+        "typescript": "^5.9.3",
+        "vitest": "^3.2.4"
+    },
+    "dependencies": {
+        "chalk": "^5.6.2",
+        "commander": "^14.0.1",
+        "glob": "^11.0.3"
+    }
 }

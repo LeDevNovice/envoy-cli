@@ -34,7 +34,7 @@ describe('FileUtils', () => {
                 '.env.example',
                 '.envoyrc.json',
                 'src/index.ts',
-                '/absolute/path/file.txt'
+                '/absolute/path/file.txt',
             ];
 
             vi.mocked(fs.existsSync).mockReturnValue(true);
@@ -90,7 +90,7 @@ describe('FileUtils', () => {
             const testCases = [
                 { path: '.env.example', content: 'ENV=production' },
                 { path: '.envoyrc.json', content: '{}' },
-                { path: 'src/config.ts', content: 'export const config = {};' }
+                { path: 'src/config.ts', content: 'export const config = {};' },
             ];
 
             testCases.forEach(({ path, content }) => {

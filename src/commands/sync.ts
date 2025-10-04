@@ -6,11 +6,13 @@ import { Syncer } from '@core/syncer';
 
 export function createSyncCommand(): Command {
     return new Command('sync')
-        .description('Synchronize .env.example with actual environment variables used in the codebase')
+        .description(
+            'Synchronize .env.example with actual environment variables used in the codebase'
+        )
         .option('--auto', 'Automatically add missing variables to .env.example')
         .option('--remove', 'Automatically remove unused variables from .env.example')
         .option('--comments', 'Add comments to newly added variables in .env.example')
-        .action(async (options) => {
+        .action(async options => {
             Logger.header('Starting synchronization process...\n');
 
             const result = await Analyzer.analyze();
@@ -21,14 +23,16 @@ export function createSyncCommand(): Command {
             }
 
             if (!options.auto && !options.remove) {
-                Logger.warning('No action specified. Use --auto to add missing variables or --remove to remove unused ones.');
+                Logger.warning(
+                    'No action specified. Use --auto to add missing variables or --remove to remove unused ones.'
+                );
                 return;
             }
 
             Syncer.sync(result.missing, result.unused, {
                 auto: options.auto,
                 remove: options.remove,
-                addComments: options.comments
+                addComments: options.comments,
             });
 
             Logger.success('\n✨ Synchronization complete!\n');

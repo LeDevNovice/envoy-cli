@@ -34,7 +34,7 @@ export class Analyzer {
             missing,
             unused,
             synced,
-            total: codeVars.size
+            total: codeVars.size,
         };
     }
 }

@@ -15,20 +15,18 @@ describe('Logger', () => {
     });
 
     describe('error', () => {
-        it('should log error message with [✗] prefix', () => {
+        it('should log error message with [✗] prefix in RED', () => {
             Logger.error('This is an error');
 
             expect(consoleLogSpy).toHaveBeenCalledWith(
-                chalk.blue('[✗]', 'This is an error')
+                chalk.red('[✗] This is an error')
             );
         });
 
         it('should handle empty error message', () => {
             Logger.error('');
 
-            expect(consoleLogSpy).toHaveBeenCalledWith(
-                chalk.blue('[✗]', '')
-            );
+            expect(consoleLogSpy).toHaveBeenCalledWith(chalk.red('[✗] '));
         });
     });
 
@@ -36,26 +34,25 @@ describe('Logger', () => {
         it('should log header message with newlines', () => {
             Logger.header('Header Message');
 
+            // ✅ CORRECTION : Un seul argument avec tout concaténé
             expect(consoleLogSpy).toHaveBeenCalledWith(
-                chalk.bold.cyan('[✗]', '\nHeader Message\n')
+                chalk.bold.cyan('\nHeader Message\n')
             );
         });
 
         it('should format header with proper spacing', () => {
             Logger.header('Test Header');
 
-            expect(consoleLogSpy).toHaveBeenCalledWith(
-                expect.stringContaining('\n')
-            );
+            expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('\n'));
         });
     });
 
     describe('info', () => {
-        it('should log info message with [i] prefix', () => {
+        it('should log info message with [i] prefix in BLUE', () => {
             Logger.info('This is an info message');
 
             expect(consoleLogSpy).toHaveBeenCalledWith(
-                chalk.blue('[i]', 'This is an info message')
+                chalk.blueBright('[i] This is an info message')
             );
         });
 
@@ -63,17 +60,17 @@ describe('Logger', () => {
             Logger.info('Line 1\nLine 2');
 
             expect(consoleLogSpy).toHaveBeenCalledWith(
-                chalk.blue('[i]', 'Line 1\nLine 2')
+                chalk.blueBright('[i] Line 1\nLine 2')
             );
         });
     });
 
     describe('success', () => {
-        it('should log success message with [✓] prefix', () => {
+        it('should log success message with [✓] prefix in GREEN', () => {
             Logger.success('Operation successful');
 
             expect(consoleLogSpy).toHaveBeenCalledWith(
-                chalk.blue('[✓]', 'Operation successful')
+                chalk.green('[✓] Operation successful')
             );
         });
 
@@ -82,18 +79,17 @@ describe('Logger', () => {
             Logger.success(longMessage);
 
             expect(consoleLogSpy).toHaveBeenCalledWith(
-                chalk.blue('[✓]', longMessage)
+                chalk.green(`[✓] ${longMessage}`)
             );
         });
     });
 
     describe('warning', () => {
-        it('should log warning message with [!] prefix', () => {
+        it('should log warning message with [!] prefix in YELLOW', () => {
             Logger.warning('This is a warning');
 
             expect(consoleLogSpy).toHaveBeenCalledWith(
-                chalk.yellow('[!]'),
-                'This is a warning'
+                chalk.yellow('[!] This is a warning')
             );
         });
 
@@ -101,8 +97,7 @@ describe('Logger', () => {
             Logger.warning('Warning message');
 
             expect(consoleLogSpy).toHaveBeenCalledWith(
-                expect.anything(),
-                'Warning message'
+                chalk.yellow('[!] Warning message')
             );
         });
     });
