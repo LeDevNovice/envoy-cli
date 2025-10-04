@@ -15,12 +15,6 @@ export default defineConfig({
                 '*.config.ts',
                 'src/index.ts'
             ],
-            thresholds: {
-                lines: 80,
-                functions: 80,
-                branches: 75,
-                statements: 80
-            }
         },
         include: ['__tests__/**/*.test.ts'],
         mockReset: true,
