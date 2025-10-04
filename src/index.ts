@@ -4,6 +4,7 @@ import { Command } from 'commander';
 
 import { createInitCommand } from '@commands/init';
 import { createCheckCommand } from '@commands/check';
+import { createSyncCommand } from '@commands/sync';
 
 const program = new Command();
 
@@ -14,5 +15,6 @@ program
 
 program.addCommand(createInitCommand());
 program.addCommand(createCheckCommand());
+program.addCommand(createSyncCommand());
 
 program.parse();
