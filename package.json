@@ -1,6 +1,6 @@
 {
   "name": "envoy-cli",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "The envoy between your code and environment variable config - Never miss an environment variable again",
   "main": "dist/index.js",
   "bin": {

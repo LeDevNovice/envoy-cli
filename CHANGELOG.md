@@ -1,7 +1,17 @@
 # Changelog
 _All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning._
 
-## Unreleased
+## 0.0.2 - 2025-10-04
+### Added
+### Core Features
+- Implemented core command-line interface using Commander.js
+  - check command: Scan and check project environment variables in project codebase ans in env files
+  - Utilities
+    - FileUtils: Add new methods to provide utilities in scan and analyze jobs
+  - Core Modules
+    - Scanner: Environment variables search in env files and codebase
+    - Analyzer: Check difference between environment variables in codebase and in env files
+
 ## 0.0.1 - 2025-10-04
 ### Added
 ### Core Features
