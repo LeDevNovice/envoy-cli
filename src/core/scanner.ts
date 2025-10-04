@@ -2,13 +2,13 @@ import { FileUtils } from '@utils/file-utils';
 import { EnvVariable, VariableLocation, ScanOptions } from '../types';
 
 export class Scanner {
-    private static readonly PATTERNS = [
+    private static readonly PATTERN_SOURCES = [
         /process\.env\.([A-Z_][A-Z0-9_]*)/gi,                    // process.env.VAR
         /process\.env\[['"]([A-Z_][A-Z0-9_]*)['"]]/gi,          // process.env['VAR']
         /import\.meta\.env\.([A-Z_][A-Z0-9_]*)/gi,              // import.meta.env.VAR (Vite)
         /Deno\.env\.get\(['"]([A-Z_][A-Z0-9_]*)['"]]/gi,        // Deno.env.get('VAR')
         /\$env:([A-Z_][A-Z0-9_]*)/gi,                           // $env:VAR (PowerShell)
-    ];
+    ] as const;
 
     static async scanProject(options: ScanOptions = {}): Promise<Map<string, EnvVariable>> {
         const envVars = new Map<string, EnvVariable>();
@@ -29,7 +29,8 @@ export class Scanner {
             const content = FileUtils.read(file);
             const lines = content.split('\n');
 
-            for (const pattern of this.PATTERNS) {
+            for (const patternSource of this.PATTERN_SOURCES) {
+                const pattern = new RegExp(patternSource.source, patternSource.flags);
                 let match: RegExpExecArray | null;
 
                 while ((match = pattern.exec(content)) !== null) {
