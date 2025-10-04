@@ -32,6 +32,10 @@ export function createInitCommand(): Command {
 
             Logger.success('envoy-cli has been successfully initialized in your project !');
             Logger.info('Next steps:');
-            Logger.list(['First step', 'Second step', 'Third step']);
+            Logger.list([
+                'Run "envoy-cli check" to scan your project',
+                'Run "envoy-cli sync --auto" to synchronize variables',
+                'Add "envoy-cli check --ci" to your CI/CD pipeline',
+            ]);
         });
 }

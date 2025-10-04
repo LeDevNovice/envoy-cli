@@ -13,7 +13,7 @@ program
     .description(
         'The envoy between your code and environment variable config - Never miss an environment variable again'
     )
-    .version('0.0.1');
+    .version('1.0.0');
 
 program.addCommand(createInitCommand());
 program.addCommand(createCheckCommand());
