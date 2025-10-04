@@ -1,6 +1,14 @@
 # Changelog
 _All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning._
 
+## 0.0.3 - 2025-10-04
+### Added
+### Core Features
+- Implemented core command-line interface using Commander.js
+  - sync command: Synchronize environment variables in codebase with env files
+  - Core Modules
+    - Syncer: Synchronize environment variables in codebase with env files
+
 ## 0.0.2 - 2025-10-04
 ### Added
 ### Core Features
