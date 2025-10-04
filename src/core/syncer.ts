@@ -51,7 +51,10 @@ export class Syncer {
         }
 
         if (missing.length > 0) {
-            if (content && !content.endsWith('\n')) {
+            const hasContent = content.trim().length > 0;
+            const needsNewline = hasContent && !content.endsWith('\n');
+
+            if (needsNewline) {
                 content += '\n';
             }
 
@@ -59,7 +62,18 @@ export class Syncer {
                 if (!existingVars.has(varInfo.name)) {
                     if (options.addComments) {
                         const location = varInfo.locations[0];
-                        content += `\n# Used in ${location.file}:${location.line}\n`;
+
+                        if (hasContent) {
+                            content += '\n';
+                        }
+
+                        content += `# Used in ${location.file}:${location.line}\n`;
+
+                        if (varInfo.locations.length > 1) {
+                            content += `# Also used in ${varInfo.locations.length - 1} other location(s)\n`;
+                        }
+                    } else if (hasContent) {
+                        content += '\n';
                     }
 
                     content += `${varInfo.name}=\n`;

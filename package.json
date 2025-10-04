@@ -1,16 +1,23 @@
 {
     "name": "envoy-cli",
-    "version": "0.0.3",
+    "version": "1.0.0",
     "description": "The envoy between your code and environment variable config - Never miss an environment variable again",
     "main": "dist/index.js",
     "bin": {
         "envoy-cli": "./dist/index.js"
     },
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE",
+        "CHANGELOG.md"
+    ],
     "scripts": {
         "build": "tsc",
         "dev": "tsc --watch",
         "start": "node dist/index.js",
         "prepublishOnly": "npm run build",
+        "prepack": "npm run build && npm run test",
         "test": "vitest run",
         "test:watch": "vitest",
         "test:coverage": "vitest run --coverage",
@@ -24,10 +31,24 @@
         "environment",
         "dotenv",
         "cli",
-        "devtools"
+        "devtools",
+        "environment-variables",
+        "env-management",
+        "typescript",
+        "validation",
+        "sync",
+        "configuration"
     ],
     "author": "LeDevNovice",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/LeDevNovice/envoy-cli.git"
+    },
+    "bugs": {
+        "url": "https://github.com/LeDevNovice/envoy-cli/issues"
+    },
+    "homepage": "https://github.com/LeDevNovice/envoy-cli#readme",
     "engines": {
         "node": ">=16.0.0"
     },
