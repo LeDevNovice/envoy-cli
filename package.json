@@ -1,0 +1,27 @@
+{
+  "name": "envoy-cli",
+  "version": "0.0.1",
+  "description": "The envoy between your code and environment variable config - Never miss an environment variable again",
+  "main": "dist/index.js",
+  "bin": {
+    "envoy-cli": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "env",
+    "environment",
+    "dotenv",
+    "cli",
+    "devtools"
+  ],
+  "author": "LeDevNovice",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
