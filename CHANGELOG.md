@@ -1,7 +1,7 @@
 # Changelog
 _All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning._
 
-## 1.0.2 - 2025-10-05
+## 1.0.2 - Unreleased
 ### Added
 - **Destructuring Support** : Automatic detection of ES6 destructuring patterns
   - `const { API_KEY } = process.env`
