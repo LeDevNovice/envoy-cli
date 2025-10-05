@@ -1,6 +1,32 @@
 # Changelog
 _All notable changes to this project will be documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning._
 
+## 1.0.2 - 2025-10-05
+### Added
+- **Destructuring Support** : Automatic detection of ES6 destructuring patterns
+  - `const { API_KEY } = process.env`
+  - `const { API_KEY, DATABASE_URL } = process.env` (multiple variables)
+  - `const { API_KEY: apiKey } = process.env` (with renaming)
+  - `const { PORT = '3000' } = process.env` (with default values)
+  - Works with `const`, `let`, and `var` declarations
+  - Supports both `process.env` and `import.meta.env` (Vite)
+  - Properly ignores rest operators (`...rest`)
+
+- **Template Literal Support**: Detection of variables in template strings
+  - ``const url = `http://localhost:${process.env.PORT}/api`;``
+  - Works with both `process.env` and `import.meta.env`
+  - Detects multiple variables in the same template literal
+
+### Improved
+- Scanner now detects more environment variables in modern codebases
+- Better support for ES6+ syntax patterns
+- Comprehensive test coverage for all new patterns
+
+### Technical Details
+- Added `extractDestructuredVars()` method in Scanner
+- Two-phase scanning : regex patterns + line-by-line destructuring analysis
+- Duplicate detection to avoid counting same variable multiple times
+
 ## 1.0.1 - 2025-10-05
 ### Added
 - Windows Git Bash troubleshooting section

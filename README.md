@@ -352,7 +352,7 @@ envoy-cli uses a `.envoyrc.json` file for configuration (created automatically b
 
 envoy-cli automatically detects environment variables in multiple formats :
 
-### Node.js
+### Node.js - Traditional Access
 
 ```javascript
 // Direct access
@@ -363,12 +363,59 @@ const dbUrl = process.env['DATABASE_URL'];
 const token = process.env["API_TOKEN"];
 ```
 
+### Node.js - Modern Destructuring
+
+```javascript
+// Simple destructuring
+const { API_KEY } = process.env;
+
+// Multiple variables
+const { API_KEY, DATABASE_URL, PORT } = process.env;
+
+// With renaming
+const { API_KEY: apiKey, DATABASE_URL: dbUrl } = process.env;
+
+// With default values
+const { PORT = '3000', NODE_ENV = 'development' } = process.env;
+
+// Mixed patterns
+const {
+    API_KEY: apiKey = 'default_key',
+    DATABASE_URL,
+    PORT = '3000',
+    ...otherVars  // rest operator is ignored
+} = process.env;
+
+// With let/var (works too !)
+let { REDIS_URL } = process.env;
+var { CACHE_TTL } = process.env;
+```
+
+### Template Literals 
+
+```javascript
+// In URLs
+const apiUrl = `http://localhost:${process.env.PORT}/api`;
+
+// In connection strings
+const dbUrl = `postgresql://user:pass@${process.env.DB_HOST}:${process.env.DB_PORT}/mydb`;
+
+// Multiple variables in one string
+const url = `${process.env.PROTOCOL}://${process.env.HOST}:${process.env.PORT}`;
+```
+
 ### Vite / Frontend Frameworks
 
 ```javascript
-// Vite environment variables
+// Traditional Vite access
 const apiUrl = import.meta.env.VITE_API_URL;
 const mode = import.meta.env.VITE_MODE;
+
+// Vite destructuring 
+const { VITE_API_URL, VITE_MODE } = import.meta.env;
+
+// Vite template literals 
+const endpoint = `${import.meta.env.VITE_API_URL}/users`;
 ```
 
 ### Deno

@@ -3,21 +3,73 @@ import { Logger } from '@utils/logger';
 import { EnvVariable, VariableLocation, ScanOptions } from '../types';
 
 export class Scanner {
-    /**
-     * Regex patterns to detect environment variables in different formats
-     * - process.env.VAR_NAME
-     * - process.env['VAR_NAME'] or process.env["VAR_NAME"]
-     * - import.meta.env.VAR_NAME (Vite)
-     * - Deno.env.get('VAR_NAME')
-     * - $env:VAR_NAME (PowerShell)
-     */
     private static readonly PATTERN_SOURCES = [
         /process\.env\.([A-Z_][A-Z0-9_]*)/gi,
         /process\.env\[['"]([A-Z_][A-Z0-9_]*)['"]]/gi,
         /import\.meta\.env\.([A-Z_][A-Z0-9_]*)/gi,
         /Deno\.env\.get\(['"]([A-Z_][A-Z0-9_]*)['"]]/gi,
         /\$env:([A-Z_][A-Z0-9_]*)/gi,
+        /\$\{process\.env\.([A-Z_][A-Z0-9_]*)\}/gi,
+        /\$\{import\.meta\.env\.([A-Z_][A-Z0-9_]*)\}/gi,
     ] as const;
+
+    private static extractDestructuredVars(
+        content: string,
+        source: string
+    ): Array<{ name: string; matchIndex: number }> {
+        const vars: Array<{ name: string; matchIndex: number }> = [];
+
+        const destructuringPattern = new RegExp(
+            `(?:const|let|var)\\s*\\{([\\s\\S]+?)\\}\\s*=\\s*${source.replace('.', '\\.')}`,
+            'g'
+        );
+
+        let match: RegExpExecArray | null;
+
+        while ((match = destructuringPattern.exec(content)) !== null) {
+            const destructuredContent = match[1];
+            const matchStartIndex = match.index;
+
+            const parts = destructuredContent.split(',');
+
+            for (const part of parts) {
+                const cleaned = part.trim();
+
+                if (cleaned.startsWith('...')) {
+                    continue;
+                }
+
+                let varName = cleaned;
+
+                if (cleaned.includes(':')) {
+                    varName = cleaned.split(':')[0].trim();
+                }
+
+                if (varName.includes('=')) {
+                    varName = varName.split('=')[0].trim();
+                }
+
+                if (/^[A-Z_][A-Z0-9_]*$/i.test(varName)) {
+                    const varPositionInMatch = destructuredContent.indexOf(varName);
+
+                    const absolutePosition = matchStartIndex + varPositionInMatch;
+
+                    vars.push({
+                        name: varName,
+                        matchIndex: absolutePosition,
+                    });
+                }
+            }
+        }
+
+        return vars;
+    }
+
+    private static getLineNumberFromPosition(content: string, position: number): number {
+        const beforePosition = content.substring(0, position);
+
+        return beforePosition.split('\n').length;
+    }
 
     static async scanProject(options: ScanOptions = {}): Promise<Map<string, EnvVariable>> {
         const envVars = new Map<string, EnvVariable>();
@@ -45,6 +97,7 @@ export class Scanner {
 
                     while ((match = pattern.exec(content)) !== null) {
                         const varName = match[1];
+
                         const lineNumber = content.substring(0, match.index).split('\n').length;
                         const line = lines[lineNumber - 1];
 
@@ -65,6 +118,46 @@ export class Scanner {
                                 inEnv: false,
                             });
                         }
+                    }
+                }
+
+                const processEnvVars = this.extractDestructuredVars(content, 'process.env');
+
+                const importMetaEnvVars = this.extractDestructuredVars(
+                    content,
+                    'import.meta.env'
+                );
+
+                const allDestructuredVars = [...processEnvVars, ...importMetaEnvVars];
+
+                for (const { name: varName, matchIndex } of allDestructuredVars) {
+                    const lineNumber = this.getLineNumberFromPosition(content, matchIndex);
+                    const line = lines[lineNumber - 1];
+
+                    const location: VariableLocation = {
+                        file: file.replace(projectRoot + '/', ''),
+                        line: lineNumber,
+                        column: line.indexOf(varName),
+                        code: line.trim(),
+                    };
+
+                    if (envVars.has(varName)) {
+                        const existing = envVars.get(varName)!;
+
+                        const isDuplicate = existing.locations.some(
+                            loc => loc.file === location.file && loc.line === location.line
+                        );
+
+                        if (!isDuplicate) {
+                            existing.locations.push(location);
+                        }
+                    } else {
+                        envVars.set(varName, {
+                            name: varName,
+                            locations: [location],
+                            inExample: false,
+                            inEnv: false,
+                        });
                     }
                 }
             } catch (error) {
